@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olifia's Coquette Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background: url("https://i.ibb.co/gVdppx3/coquette-bg.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #444;
+      line-height: 1.7;
+      font-size: 1.1em;
+      transition: background 0.4s, color 0.4s;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,240,245,0.8);
+      z-index: -1;
+    }
+    body.dark { color: #eee; }
+    body.dark::before { background: rgba(0,0,0,0.7); }
+
+    /* Header & Menu */
+    header { position: fixed; top: 20px; left: 20px; z-index: 999; }
+    .menu-icon {
+      background: #fff;
+      border: 2px solid pink;
+      padding: 10px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+    }
+    .menu-icon:hover { background: pink; color: white; transform: scale(1.1); }
+    nav {
+      display: none;
+      position: fixed; top: 70px; left: 20px;
+      background: #fff;
+      border: 2px solid pink;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+    nav a {
+      display: block; margin: 12px 0;
+      text-decoration: none; color: #444;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    nav a:hover { color: white; background: pink; padding-left: 8px; border-radius: 8px; }
+
+    main { padding: 90px 20px 50px; max-width: 900px; margin: auto; }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      color: palevioletred;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    /* Profile Image */
+    img.profile {
+      width: 180px;
+      border-radius: 50%;
+      border: 3px solid pink;
+      margin: 20px auto;
+      display: block;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    /* Sections */
+    section { display: none; }
+    section.active { display: block; animation: fadeIn 0.8s ease; }
+
+    /* Biodata Card */
+    .biodata {
+      background: rgba(255,255,255,0.95);
+      padding: 25px;
+      border-radius: 20px;
+      border: 2px solid pink;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    .biodata h2 {
+      font-size: 1.6em;
+      color: hotpink;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .biodata ul { list-style: none; padding: 0; }
+    .biodata li {
+      padding: 8px 0;
+      border-bottom: 1px dashed pink;
+    }
+    .biodata li:last-child { border: none; }
+
+    /* Socials */
+    .socials { text-align: center; }
+    .socials a {
+      display: inline-block;
+      margin: 8px;
+      padding: 10px 20px;
+      background: pink;
+      color: white;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .socials a:hover { background: hotpink; transform: translateY(-3px); }
+
+    /* Diary */
+    .diary {
+      background: rgba(255,255,255,0.95);
+      padding: 25px;
+      border-radius: 20px;
+      border: 2px dashed pink;
+      text-align: center;
+    }
+    .diary img {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-style: italic;
+      text-align: center;
+      color: palevioletred;
+    }
+
+    /* Controls */
+    .controls {
+      position: fixed; top: 20px; right: 20px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .controls button {
+      background: pink;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1em;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+    .controls button:hover { background: hotpink; transform: scale(1.1); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="menu-icon" onclick="toggleMenu()">☰ Menu</div>
+    <nav id="menu">
+      <a href="#" onclick="showPage('about')">About Me</a>
+      <a href="#" onclick="showPage('social')">Social Media</a>
+      <a href="#" onclick="showPage('diary')">Diary</a>
+      <a href="#" onclick="showPage('thankyou')">Ucapan Terima Kasih</a>
+    </nav>
+  </header>
+
+  <div class="controls">
+    <button onclick="toggleDarkMode()">🌙/☀️</button>
+  </div>
+
+  <main>
+    <!-- About Section -->
+    <section id="about" class="active">
+      <h1>Olifia Ramat ✨</h1>
+      <img src="https://i.ibb.co/S3JwzBf/profile.jpg" alt="Foto Olifia" class="profile">
+      <div class="biodata">
+        <h2>📌 Biodata Diri</h2>
+        <ul>
+          <li><strong>Nama:</strong> Olifia Ramat</li>
+          <li><strong>Tanggal Lahir:</strong> 14 Juni 2007</li>
+          <li><strong>Hobi:</strong> Membaca, coding, desain</li>
+        </ul>
+      </div>
+      <div class="biodata">
+        <h2>🏫 Biodata Sekolah</h2>
+        <ul>
+          <li><strong>Sekolah:</strong> SMKN 3</li>
+          <li><strong>Jurusan:</strong> Teknik Komputer dan Jaringan (TKJ)</li>
+          <li><strong>Kelas:</strong> XII TKJ</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Socials -->
+    <section id="social">
+      <h1>🌸 Temukan Aku</h1>
+      <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">TikTok</a>
+      </div>
+    </section>
+
+    <!-- Diary -->
+    <section id="diary">
+      <h1>📖 My Diary</h1>
+      <div class="diary">
+        <p>Hari ini aku belajar bikin web coquette pink aesthetic dengan menu dan biodata sekolah. Cantik banget hasilnya 💖</p>
+        <img src="https://i.ibb.co/4Rj3hYw/diary-pic.jpg" alt="Diary">
+      </div>
+    </section>
+
+    <!-- Thank You -->
+    <section id="thankyou">
+      <h1>💌 Terima Kasih</h1>
+      <footer>
+        Terima kasih sudah mampir di halaman kecilku 🌷  
+        Semoga harimu indah 💖
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+    function showPage(page) {
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElementById(page).classList.add("active");
+      document.getElementById("menu").style.display = "none";
+    }
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+  </script>
+</body>
+</html>
